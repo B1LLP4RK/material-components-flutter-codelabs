@@ -13,23 +13,94 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'model/product.dart';
+import 'model/products_repository.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+  List<Card> _buildCards(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    List<Product> products = ProductsRepository.loadProducts(Category.all);
 
-  // TODO: Make a collection of cards (102)
+    return products.map((Product product) {
+      return Card(
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AspectRatio(
+              aspectRatio: 1 / 1,
+              child: Image.asset(
+                product.assetName,
+                package: product.assetPackage,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    style: theme.textTheme.titleLarge,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    '${product.price} USD',
+                    style: theme.textTheme.titleSmall,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }).toList();
+  }
+
   // TODO: Add a variable for Category (104)
   @override
   Widget build(BuildContext context) {
     // TODO: Return an AsymmetricView (104)
     // TODO: Pass Category variable to AsymmetricView (104)
-    return const Scaffold(
-      // TODO: Add app bar (102)
-      // TODO: Add a grid view (102)
-      body: Center(
-        child: Text('You did it!'),
-      ),
-      // TODO: Set resizeToAvoidBottomInset (101)
-    );
+    return Scaffold(
+        appBar: AppBar(
+          elevation: 10,
+          title: const Text("Shrine"),
+          leading: IconButton(
+            onPressed: () {
+              print('menu pressed');
+            },
+            icon: const Icon(
+              Icons.menu,
+              semanticLabel: 'menu',
+            ),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  semanticLabel: 'search',
+                )),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.tune,
+                  semanticLabel: 'tune',
+                )),
+          ],
+        ),
+        body: GridView.count(
+          crossAxisCount: 2,
+          padding: const EdgeInsets.all(12),
+          children: _buildCards(context),
+          childAspectRatio: 10 / 13,
+        ));
   }
 }
