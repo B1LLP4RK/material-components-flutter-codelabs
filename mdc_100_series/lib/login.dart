@@ -44,14 +44,16 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 120.0),
             // TODO: Remove filled: true values (103)
             TextField(
-              decoration: InputDecoration(filled: true, labelText: 'username'),
+              decoration:
+                  const InputDecoration(filled: true, labelText: 'username'),
               controller: _usernameController,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
-              decoration: InputDecoration(filled: true, labelText: 'password'),
+              decoration:
+                  const InputDecoration(filled: true, labelText: 'password'),
               obscureText: true,
               controller: _passwordCotroller,
             ),
@@ -63,12 +65,12 @@ class _LoginPageState extends State<LoginPage> {
                       _passwordCotroller.clear();
                       _usernameController.clear();
                     },
-                    child: Text('Cancel')),
+                    child: const Text('Cancel')),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text('Next'))
+                    child: const Text('Next'))
               ],
             )
 
